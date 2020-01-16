@@ -27,17 +27,9 @@
     // Some and Every Checks
     // Array.prototype.some() // is at least one person 19 or older?
     // Array.prototype.every() // is everyone 19 or older?
-    const date = new Date();
-    const currentYear = date.getFullYear();
-
-    const ages = people.map(person => currentYear - person.year);
-
-    const hasAdult = ages.some(age => age >= 19);
-    const allAdults = ages.every(age => age >= 19);
-    
-    console.log('ages', ages);
-    console.log('is at least one person 19 or older?', hasAdult);
-    console.log('is everyone 19 or older?', allAdults);
+    const hasAdult = people.some(person => (new Date()).getFullYear() - person.year >= 19);
+    const allAdults = people.every(person => (new Date()).getFullYear() - person.year >= 19);
+    console.log({hasAdult}, {allAdults});
 
     // Array.prototype.find()
     // Find is like filter, but instead returns just the one you are looking for
@@ -45,16 +37,23 @@
     const commentID = 823423;
 
     const comment = comments.find(comment => comment.id === commentID);
-    console.log('\nfind the comment with the ID of 823423', comment)
+    console.log(`\nfind the comment with the ID of ${commentID}`, comment)
 
     // Array.prototype.findIndex()
     // Find the comment with this ID
     // delete the comment with the ID of 823423
-    const commentIndex = comments.findIndex(comment => comment.id === commentID);
-    const newComments = [...comments.slice(0, commentIndex), ...comments.slice(commentIndex + 1)];
+    const index = comments.findIndex(comment => comment.id === commentID);
+
+    // comments.splice(index, 1);
+
+    const newComments = [
+      ...comments.slice(0, index),
+      ...comments.slice(index + 1)
+    ];
+
     console.log('\nComments:');
     console.table(comments);
-    console.log(`New comments after removing comment with ID ${commentID}:`);
+    console.log(`\nNew comments after removing comment with ID ${commentID}:`);
     console.table(newComments);
 
   </script>
